@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -67,27 +65,9 @@ public class Formulario extends javax.swing.JFrame
 
         num2.setText("Numero 2:");
 
-        txtNumero1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNumero1ActionPerformed(evt);
-            }
-        });
-
         num1.setText("Numero 1:");
 
-        txtResultado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtResultadoActionPerformed(evt);
-            }
-        });
-
         result.setText("Resultado:");
-
-        txtNumero2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNumero2ActionPerformed(evt);
-            }
-        });
 
         btnAdicao.setText("ADIÇÃO");
         btnAdicao.addActionListener(new java.awt.event.ActionListener() {
@@ -159,20 +139,19 @@ public class Formulario extends javax.swing.JFrame
                     .addComponent(btnSubtracao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnMultiplicar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(result, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(result, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtResultado))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(num1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txtResultado))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(num1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtNumero1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(num2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtNumero2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(txtNumero1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(num2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(txtNumero2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(22, Short.MAX_VALUE))
             .addComponent(painel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -208,35 +187,53 @@ public class Formulario extends javax.swing.JFrame
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtResultadoActionPerformed
-        txtResultado.setText(txtResultado.getText() + "0");
-    }//GEN-LAST:event_txtResultadoActionPerformed
+    private String ChamarServer(String operador, double n1, double n2) throws Exception {
+        String urlParaChamada = "http://localhost:5000/api/Calculadora/calcular?operador= "
+                + "*" + operador + 
+                "&num1=" + Double.toString(n1) + 
+                "&num2=" + Double.toString(n2);
+        int codigoSucesso = 200;
 
-    private void txtNumero1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumero1ActionPerformed
-        double txtNumero1 ;
-       
-    }//GEN-LAST:event_txtNumero1ActionPerformed
 
-    private void txtNumero2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumero2ActionPerformed
-      double txtNumero2 ;  
-    }//GEN-LAST:event_txtNumero2ActionPerformed
+        try {
+            URL url = new URL(urlParaChamada);
+            HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
 
+            if (conexao.getResponseCode() != codigoSucesso)
+                throw new RuntimeException("HTTP error code : " + conexao.getResponseCode());
+
+            BufferedReader resposta = new BufferedReader(new InputStreamReader((conexao.getInputStream())));
+            String jsonEmString = converteJsonEmString(resposta);
+
+            return jsonEmString;
+        } catch (Exception e) {
+            throw new Exception("ERRO: " + e);
+        }
+    }
+
+    private String converteJsonEmString(BufferedReader buffereReader) throws IOException {
+        String resposta, jsonEmString = "";
+        while ((resposta = buffereReader.readLine()) != null) {
+            jsonEmString += resposta;
+        }
+        return jsonEmString;
+    } 
+    
     private void btnAdicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicaoActionPerformed
         try
         {
-           double num1 = Double.parseDouble(txtNumero1.getText());
-           double num2 = Double.parseDouble(txtNumero2.getText());
+           double n1 = Double.parseDouble(txtNumero1.getText());
+           double n2 = Double.parseDouble(txtNumero2.getText());
             
-           double resultado = ChamarServer("+",num1,num2);
+           String resultado = ChamarServer("+", n1, n2);
             
-            txtResultado.setText(String.valueOf(resultado));
+            txtResultado.setText(resultado);
         }catch(NumberFormatException e)
         {
             JOptionPane.showConfirmDialog(null, "Por favor digite um numero", "invalido", JOptionPane.CANCEL_OPTION);
         } catch (Exception ex) {
-            Logger.getLogger(Formulario.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
+            JOptionPane.showConfirmDialog(null, "Erro encontrado: " + ex.getMessage(), "invalido", JOptionPane.CANCEL_OPTION);
+        }       
     }//GEN-LAST:event_btnAdicaoActionPerformed
 
     private void btnDivisaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDivisaoActionPerformed
@@ -307,37 +304,7 @@ public class Formulario extends javax.swing.JFrame
     private javax.swing.JTextField txtResultado;
     // End of variables declaration//GEN-END:variables
 
-  private double ChamarServer(String operador, double n1, double n2) throws Exception {
-        String urlParaChamada = "http://localhost:5000/api/Calculadora/calcular?operador= "
-                + "*" + operador + 
-                "&num1=" + Double.toString(n1) + 
-                "&num2=" + Double.toString(n2);
-        int codigoSucesso = 200;
-
-
-        try {
-            URL url = new URL(urlParaChamada);
-            HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
-
-            if (conexao.getResponseCode() != codigoSucesso)
-                throw new RuntimeException("HTTP error code : " + conexao.getResponseCode());
-
-            BufferedReader resposta = new BufferedReader(new InputStreamReader((conexao.getInputStream())));
-            String jsonEmString = converteJsonEmString(resposta);
-
-            return Float.parseFloat(jsonEmString);
-        } catch (Exception e) {
-            throw new Exception("ERRO: " + e);
-        }
-    }
-
-    private String converteJsonEmString(BufferedReader buffereReader) throws IOException {
-        String resposta, jsonEmString = "";
-        while ((resposta = buffereReader.readLine()) != null) {
-            jsonEmString += resposta;
-        }
-        return jsonEmString;
-    } 
+  
 
 
 
