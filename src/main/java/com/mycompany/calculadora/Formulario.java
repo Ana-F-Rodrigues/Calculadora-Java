@@ -62,6 +62,7 @@ public class Formulario extends javax.swing.JFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         num2.setText("Numero 2:");
 
@@ -69,6 +70,7 @@ public class Formulario extends javax.swing.JFrame
 
         result.setText("Resultado:");
 
+        btnAdicao.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAdicao.setText("ADIÇÃO");
         btnAdicao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,6 +78,7 @@ public class Formulario extends javax.swing.JFrame
             }
         });
 
+        btnSubtracao.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSubtracao.setText("SUBTRAÇÃO");
         btnSubtracao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -83,6 +86,7 @@ public class Formulario extends javax.swing.JFrame
             }
         });
 
+        btnDivisao.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnDivisao.setText("DIVISÃO");
         btnDivisao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,6 +94,7 @@ public class Formulario extends javax.swing.JFrame
             }
         });
 
+        btnMultiplicar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnMultiplicar.setText("MULTIPLICAÇÃO");
         btnMultiplicar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -117,9 +122,10 @@ public class Formulario extends javax.swing.JFrame
             .addGroup(painelLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(titulo)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btnLimpar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLimpar.setText("LIMPAR");
         btnLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,13 +143,9 @@ public class Formulario extends javax.swing.JFrame
                     .addComponent(btnAdicao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnDivisao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSubtracao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnMultiplicar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(result, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtResultado))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnMultiplicar, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+                    .addComponent(btnLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(num1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -151,15 +153,19 @@ public class Formulario extends javax.swing.JFrame
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(num2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txtNumero2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(22, Short.MAX_VALUE))
-            .addComponent(painel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtNumero2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(result, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(txtResultado))))
+                .addContainerGap(36, Short.MAX_VALUE))
+            .addComponent(painel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(painel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNumero1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(num1))
@@ -187,6 +193,8 @@ public class Formulario extends javax.swing.JFrame
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //montamos endereço para chamada da API
+    //tudo que vem depois da interrogação é parâmetro pro método REST calcular
     private String ChamarServer(String operador, double n1, double n2) throws Exception {
         String urlParaChamada = "http://localhost:5000/api/Calculadora/calcular?operador="
                 + operador + 
@@ -201,6 +209,9 @@ public class Formulario extends javax.swing.JFrame
 
             if (conexao.getResponseCode() != codigoSucesso)
                 return "HTTP error code : " + conexao.getResponseCode();
+            
+            // pega RESULTADO da API e  deixa de forma que a gente consiga ler
+            //pega em formato BINARIO e TRADUZ para TEXTO
 
             BufferedReader resposta = new BufferedReader(new InputStreamReader((conexao.getInputStream())));
             String jsonEmString = converteJsonEmString(resposta);
@@ -211,6 +222,9 @@ public class Formulario extends javax.swing.JFrame
         }
     }
 
+    //se não retornar nulo, ele vai acumulando o texto nessa variável jsonEmString
+    //manda mostrar esse resultado no txtResposta 
+    
     private String converteJsonEmString(BufferedReader buffereReader) throws IOException {
         String resposta, jsonEmString = "";
         while ((resposta = buffereReader.readLine()) != null) {
@@ -236,9 +250,12 @@ public class Formulario extends javax.swing.JFrame
             JOptionPane.showConfirmDialog(null, "Erro encontrado: " + ex.getMessage(), "invalido", JOptionPane.CANCEL_OPTION);
         }
     }
-    
+    // URL NAO ACEITA  esseS caracteres + / e * são protegidos
+    //caracter ASCII
     private void btnAdicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicaoActionPerformed
         RealizarContas("%2B");
+        //ao invés de passar a string +,
+        //passa esse código que ela consegue chegar ate a API e saber que é um +
     }//GEN-LAST:event_btnAdicaoActionPerformed
 
     private void btnDivisaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDivisaoActionPerformed
@@ -254,7 +271,7 @@ public class Formulario extends javax.swing.JFrame
     }//GEN-LAST:event_btnMultiplicarActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        // TODO add your handling code here:
+        txtResultado.setText("");
     }//GEN-LAST:event_btnLimparActionPerformed
 
     /**
