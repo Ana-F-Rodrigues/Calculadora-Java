@@ -188,8 +188,8 @@ public class Formulario extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
     private String ChamarServer(String operador, double n1, double n2) throws Exception {
-        String urlParaChamada = "http://localhost:5000/api/Calculadora/calcular?operador= "
-                + "*" + operador + 
+        String urlParaChamada = "http://localhost:5000/api/Calculadora/calcular?operador="
+                + operador + 
                 "&num1=" + Double.toString(n1) + 
                 "&num2=" + Double.toString(n2);
         int codigoSucesso = 200;
@@ -200,7 +200,7 @@ public class Formulario extends javax.swing.JFrame
             HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
 
             if (conexao.getResponseCode() != codigoSucesso)
-                throw new RuntimeException("HTTP error code : " + conexao.getResponseCode());
+                return "HTTP error code : " + conexao.getResponseCode();
 
             BufferedReader resposta = new BufferedReader(new InputStreamReader((conexao.getInputStream())));
             String jsonEmString = converteJsonEmString(resposta);
@@ -219,13 +219,14 @@ public class Formulario extends javax.swing.JFrame
         return jsonEmString;
     } 
     
-    private void btnAdicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicaoActionPerformed
+    private void RealizarContas(String operador) {
         try
         {
+
            double n1 = Double.parseDouble(txtNumero1.getText());
            double n2 = Double.parseDouble(txtNumero2.getText());
             
-           String resultado = ChamarServer("+", n1, n2);
+           String resultado = ChamarServer(operador, n1, n2);
             
             txtResultado.setText(resultado);
         }catch(NumberFormatException e)
@@ -233,19 +234,23 @@ public class Formulario extends javax.swing.JFrame
             JOptionPane.showConfirmDialog(null, "Por favor digite um numero", "invalido", JOptionPane.CANCEL_OPTION);
         } catch (Exception ex) {
             JOptionPane.showConfirmDialog(null, "Erro encontrado: " + ex.getMessage(), "invalido", JOptionPane.CANCEL_OPTION);
-        }       
+        }
+    }
+    
+    private void btnAdicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicaoActionPerformed
+        RealizarContas("%2B");
     }//GEN-LAST:event_btnAdicaoActionPerformed
 
     private void btnDivisaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDivisaoActionPerformed
-        // TODO add your handling code here:
+        RealizarContas("%2F");
     }//GEN-LAST:event_btnDivisaoActionPerformed
 
     private void btnSubtracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubtracaoActionPerformed
-        // TODO add your handling code here:
+        RealizarContas("-");
     }//GEN-LAST:event_btnSubtracaoActionPerformed
 
     private void btnMultiplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMultiplicarActionPerformed
-        // TODO add your handling code here:
+        RealizarContas("%2A");
     }//GEN-LAST:event_btnMultiplicarActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
